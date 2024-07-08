@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            background-color: turquoise; /* Color de fondo Turquesa */
+            color: white; /* Color de texto blanco */
+            text-align: center; /* Centrar todo el contenido */
+            position: relative; /* Establecer contexto de posición */
+            min-height: 100vh; /* Asegurar que el cuerpo ocupe toda la altura de la pantalla */
+        }
+        h1 {
+            color: #333; /* Color del título H1 */
+        }
+        .main-title {
+            margin-top: 50px; /* Espacio superior */
+        }
+        .main-title h1 {
+            color: white; /* Color de texto blanco para el título */
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 20px; /* Espacio entre el textarea y el botón */
+        }
+        input[type="submit"], button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .logo {
+            position: absolute;
+            top: 10px; /* Ajustar posición superior */
+            left: 10px; /* Ajustar posición izquierda */
+            width: 150px; /* Ancho del logo */
+            height: auto; /* Altura automática */
+            z-index: 1; /* Asegurar que esté por encima de otras capas */
+        }
+        .image-right {
+            position: absolute;
+            top: 10px; /* Ajustar posición superior */
+            right: 10px; /* Ajustar posición derecha */
+            width: 150px; /* Ancho de la imagen */
+            height: auto; /* Altura automática */
+            z-index: 1; /* Asegurar que esté por encima de otras capas */
+        }
+        .footer {
+            position: absolute;
+            bottom: 0; /* Ajustar posición inferior */
+            left: 50%; /* Centrar horizontalmente */
+            transform: translateX(-50%); /* Corregir posición centrada */
+            width: 150px; /* Ancho de la imagen */
+            height: auto; /* Altura automática */
+            margin-bottom: 30px; /* Espacio adicional hacia abajo */
+            z-index: 1; /* Asegurar que esté por encima de otras capas */
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px; /* Tamaño de fuente para los resultados de la predicción */
+        }
+    </style>
+    <script>
+        async function predict(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (result.entities) {
+                const entities = result.entities.join(', ');
+                document.getElementById('result').innerText = entities;
+            } else if (result.error) {
+                document.getElementById('result').innerText = `Error: ${result.error}`;
+            }
+        }
+
+        function clearText() {
+            document.querySelector('textarea[name="text"]').value = '';
+            document.getElementById('result').innerText = '';
+        }
+    </script>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='images/logo_idal.png') }}" alt="Logo IA3" class="logo">
+    <div class="main-title">
+        <h1>Inteligencia Artificial Avanzada y Aplicada: IA<sup>3</sup></h1>
+    </div>
+    <h2>Introduzca texto para predicción</h2>
+    <form id="predict-form" onsubmit="predict(event)">
+        <textarea name="text" rows="10" cols="30">{{ text if text else '' }}</textarea><br>
+        <input type="submit" value="Predict">
+        <button type="button" onclick="clearText()">Clear</button>
+    </form>
+    <div id="result"></div>
+    <img src="{{ url_for('static', filename='images/valencia.png') }}" alt="Valencia Image" class="image-right">
+    <div class="footer">
+        <img src="{{ url_for('static', filename='images/rocket.png') }}" alt="Rocket Image">
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

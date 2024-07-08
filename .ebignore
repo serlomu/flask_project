@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+build/
+dist/
+eggs/
+*.egg-info/
+
+# Virtual environment
+venv/
+myenv/
+ENV/
+env.bak/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local development files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+*~
+
+# Operating system files
+.DS_Store
+
+# Model files (if these are not needed for deployment)
+ner_model/
+ner_tokenizer/
+
+# Specific large files
+AWSCLIV2.pkg
+get-pip.py
+mlb.pkl
+
+
